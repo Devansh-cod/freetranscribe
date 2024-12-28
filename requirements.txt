@@ -3,4 +3,3 @@ deep-translator==1.7.0
 Flask==2.0.3
 flask-cors==3.0.10
 gunicorn==20.1.0
---upgrade pip

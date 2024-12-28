@@ -2,8 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import speech_recognition as sr
 from deep_translator import GoogleTranslator  # For translation
-from pydub import AudioSegment
-import io
 from flask import render_template
 
 app = Flask(__name__)
@@ -22,20 +20,9 @@ def transcribe_audio():
     audio_file = request.files['audio']
     language = request.form.get('language', 'en-US')
 
-    # Convert the uploaded file to WAV
-    try:
-        # Read the audio file into memory
-        audio = AudioSegment.from_file(audio_file)
-        audio_wav = io.BytesIO()
-        audio.export(audio_wav, format="wav")
-        audio_wav.seek(0)  # Reset the file pointer
-    except Exception as e:
-        return jsonify({'error': f'Error converting audio file: {str(e)}'}), 500
-
-    # Transcribe the audio
     recognizer = sr.Recognizer()
     try:
-        with sr.AudioFile(audio_wav) as source:
+        with sr.AudioFile(audio_file) as source:
             audio_data = recognizer.record(source)
             transcription = recognizer.recognize_google(audio_data, language=language)
     except Exception as e:

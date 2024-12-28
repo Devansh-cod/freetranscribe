@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: freetranscribe
+    env: python
+    build:
+      dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.1"
+    branch: main

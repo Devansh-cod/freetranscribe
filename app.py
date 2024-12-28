@@ -11,7 +11,6 @@ CORS(app)  # Enable CORS for cross-origin requests
 def index():
     return render_template('index.html')  # Assuming 'index.html' is in a 'templates' folder
 
-
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():
     if 'audio' not in request.files:
@@ -30,7 +29,6 @@ def transcribe_audio():
 
     return jsonify({'transcription': transcription})
 
-
 @app.route('/translate', methods=['POST'])
 def translate_text():
     data = request.get_json()
@@ -46,7 +44,6 @@ def translate_text():
         return jsonify({'translation': translated_text})
     except Exception as e:
         return jsonify({'error': f"Translation failed: {str(e)}"}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)
